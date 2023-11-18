@@ -1,37 +1,20 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import editIcon from "./icons/editIcon";
-import deleteIcon from "./icons/deleteIcon";
+// import editIcon from "./icons/editIcon";
+// import deleteIcon from "./icons/deleteIcon";
 import EventList from "./components/EventList";
+import useFetch from "./Hooks/useFetch";
 
 function App() {
-  const [events, setEvents] = useState([
-    {
-      eventName: "Music Festival",
-      startDate: "2023-01-20",
-      endDate: "2023-01-21",
-      id: 1,
-    },
-    {
-      eventName: "Food Festival",
-      startDate: "2023-02-01",
-      endDate: "2023-02-02",
-      id: 2,
-    },
-  ]);
-  // GET method
+  const [events, setEvents] = useState([]);
+  const { get } = useFetch("http://localhost:3000/");
 
-  const getEvent = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/events");
-      const data = await response.json();
-      setEvents(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   useEffect(() => {
-    getEvent();
+    get("events")
+      .then((data) => {
+        setEvents(data);
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   return (

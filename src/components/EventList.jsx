@@ -26,7 +26,12 @@ const EventList = ({ eventList, setEvents }) => {
           {eventList.map((event) => {
             return (
               <>
-                <Event event={event} events={eventList} setEvents={setEvents} />
+                <Event
+                  key={event}
+                  event={event}
+                  events={eventList}
+                  setEvents={setEvents}
+                />
               </>
             );
           })}
